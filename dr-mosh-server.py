@@ -13,6 +13,10 @@ BIND_TO_DEFAULT_ADDR = False
 # Whether mosh-server should bind to the discovered default address, or bind
 # to the wildcard address.
 
+HARDCODED_SERVER_ADDR = None
+# If the server IP address is fixed and you would like to have it hardcoded,
+# specify it here.
+
 TEST_IPV4_HOST = '8.8.8.8'
 # This address is used when detecting the host address towards the default
 # route. This should be an address not on any local subnet. No actual traffic
@@ -31,7 +35,7 @@ def get_default_route_ipv4_address():
 def main():
     args = sys.argv[1:]
 
-    default_addr = get_default_route_ipv4_address()
+    server_addr = HARDCODED_SERVER_ADDR or get_default_route_ipv4_address()
 
     # Replace "-s" argument.
     # When invoking mosh without "--bind-servers" or explicitly with
@@ -42,10 +46,10 @@ def main():
     # This should not prevent other "--bind-servers" arguments from working.
     for i, a in enumerate(args):
         if a == '-s':
-            args[i:i+1] = ['-i', default_addr]
+            args[i:i+1] = ['-i', server_addr]
             break
 
-    print('MOSH IP {!s}'.format(default_addr))
+    print('MOSH IP {!s}'.format(server_addr))
     os.execvp(MOSH_SERVER, [MOSH_SERVER] + args)
 
 
