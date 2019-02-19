@@ -9,10 +9,6 @@ import sys
 MOSH_SERVER = 'mosh-server'
 # Path to the mosh-server executable.
 
-BIND_TO_DEFAULT_ADDR = False
-# Whether mosh-server should bind to the discovered default address, or bind
-# to the wildcard address.
-
 HARDCODED_SERVER_ADDR = None
 # If the server IP address is fixed and you would like to have it hardcoded,
 # specify it here.
